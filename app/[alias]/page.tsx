@@ -1,11 +1,7 @@
 import { getUrl } from "@/lib/getUrl";
 import { redirect } from "next/navigation";
 
-interface AliasPageProps {
-  params: { alias: string };
-}
-
-export default async function AliasPage({ params }: AliasPageProps) {
+export default async function Page({ params }: { params: { alias: string } }) {
   const { alias } = params;
   const doc = await getUrl(alias);
 
@@ -13,7 +9,7 @@ export default async function AliasPage({ params }: AliasPageProps) {
     return (
       <div style={{ textAlign: "center", marginTop: 48 }}>
         <h1>404 - Not Found</h1>
-        <p>No URL for alias {alias}</p>
+        <p>No URL for alias &quot;{alias}&quot;</p>
       </div>
     );
   }
