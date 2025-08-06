@@ -11,5 +11,5 @@ export async function insertUrl(alias: string, url: string): Promise<Entry> {
   const col = await getCollection<Entry>(COLLECTION_NAME);
   const createdAt = new Date();
   await col.insertOne({ alias, url, createdAt });
-  return { alias, url, createdAt };
+  return { alias, url, createdAt } as Entry;
 }

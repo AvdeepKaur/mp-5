@@ -14,7 +14,6 @@ function isValidUrl(url: string) {
 export async function POST(req: NextRequest) {
   const { alias, url } = await req.json();
 
-  // Backend-side validation
   if (!alias || typeof alias !== "string" || !alias.match(/^[a-zA-Z0-9-_]+$/)) {
     return NextResponse.json({ error: "Invalid alias" }, { status: 400 });
   }
@@ -23,9 +22,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Invalid URL" }, { status: 400 });
   }
 
-  // No duplicate alias allowed
-  const found = await getUrl(alias);
-  if (found) {
+  // Prevent duplicate aliases
+  const existing = await getUrl(alias);
+  if (existing) {
     return NextResponse.json({ error: "Alias already taken" }, { status: 400 });
   }
 

@@ -17,7 +17,6 @@ async function connect(): Promise<Db> {
   client = new MongoClient(MONGO_URI);
   await client.connect();
   db = client.db(DB_NAME);
-
   return db;
 }
 
