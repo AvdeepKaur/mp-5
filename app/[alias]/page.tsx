@@ -13,7 +13,7 @@ export default async function AliasPage({ params }: AliasPageProps) {
     return (
       <div style={{ textAlign: "center", marginTop: 48 }}>
         <h1>404 - Not Found</h1>
-        <p>No URL for alias "{alias}"</p>
+        <p>No URL for alias {alias}</p>
       </div>
     );
   }
