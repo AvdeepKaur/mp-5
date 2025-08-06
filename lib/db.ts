@@ -1,8 +1,8 @@
-import { MongoClient, Db, Collection, Document } from "mongodb";
+import { Collection, Db, MongoClient } from "mongodb";
 
-const MONGO_URI = process.env.MONGODB_URI as string;
+const MONGO_URI = process.env.MONGO_URI as string;
 if (!MONGO_URI) {
-  throw new Error("MONGODB_URI environment variable is not set");
+  throw new Error("MONGO_URI environment variable is undefined");
 }
 
 const DB_NAME = "mp5";
@@ -12,19 +12,19 @@ let client: MongoClient | null = null;
 let db: Db | null = null;
 
 async function connect(): Promise<Db> {
-  if (db) return db;
-
-  client = new MongoClient(MONGO_URI);
-  await client.connect();
-  db = client.db(DB_NAME);
-  return db;
+  if (!client) {
+    client = new MongoClient(MONGO_URI);
+    await client.connect();
+  }
+  return client.db(DB_NAME);
 }
 
-export default async function getCollection<T extends Document>(
+export default async function getCollection(
   collectionName: string
-): Promise<Collection<T>> {
+): Promise<Collection> {
   if (!db) {
     db = await connect();
   }
-  return db.collection<T>(collectionName);
+
+  return db.collection(collectionName);
 }
